@@ -22,7 +22,7 @@ version: '2.3'
 
 services:
   runner:
-    image: ghcr.io/chrisromp/github-actions-runner # FIXME: once published
+    image: ghcr.io/chrisromp/github-actions-runner
     environment: # pulled from .env file (not tracked)
       - ORGANIZATION
       - ACCESS_TOKEN
