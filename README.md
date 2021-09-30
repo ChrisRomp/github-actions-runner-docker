@@ -2,6 +2,8 @@
 
 A simple, Dockerized runner for GitHub Actions.
 
+[![Docker Publish](https://github.com/ChrisRomp/github-actions-runner-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/ChrisRomp/github-actions-runner-docker/actions/workflows/docker-publish.yml)
+
 ## Configuration
 
 You will need to set the following environment variables for the container:
