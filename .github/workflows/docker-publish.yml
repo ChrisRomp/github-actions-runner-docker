@@ -9,12 +9,17 @@ on:
 #  schedule:
 #    - cron: '39 23 * * *'
   push:
-    branches: [ main ]
+    #branches: [ main ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      tags:
+        description: Docker image tag(s)
+        required: true
+        default: latest
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -43,7 +48,7 @@ jobs:
         with:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
-          password: ${{ secrets.CONTAINER_PUB_TOKEN }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
