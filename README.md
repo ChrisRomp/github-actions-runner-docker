@@ -27,8 +27,8 @@ services:
       - ORGANIZATION
       - ACCESS_TOKEN
       - RUNNER_LABELS
-    volumes:
-      - /usr/share/docker-config/swag/config/r3web:/services/r3web
+#    volumes: # Mount resources the runner will need access to
+#      - /var/www:/services/www
     restart: unless-stopped
     healthcheck:
       test: "ps ax | grep \"/home/docker/actions-runner/bin/Runner.Listener run\" | grep -v grep"
