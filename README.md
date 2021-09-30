@@ -1,8 +1,11 @@
 # github-actions-runner-docker
+
 A simple, Dockerized runner for GitHub Actions.
 
 ## Configuration
+
 You will need to set the following environment variables for the container:
+
 * `ORGANIZATION`
   * The name of the GitHub organization the runner will bind to, e.g., `https://github.com/{ORGANIZATION}` 
 * `ACCESS_TOKEN`
@@ -11,6 +14,7 @@ You will need to set the following environment variables for the container:
   * A set of labels to apply to the runner to control job affinity (i.e., where your jobs will run)
   
 ## Docker Compose
+
 A sample docker-compose.yaml. You should include the aforementioned environment variables in a `.env` file in the same directory to avoid saving them in the compose file.
 
 ```yaml
