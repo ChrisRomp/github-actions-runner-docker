@@ -13,6 +13,10 @@ jobs:
   check-update:
     name: Check for Update
     runs-on: ubuntu-latest
+
+    outputs:
+      ourVersion: ${{ steps.ourVersion.outputs.release }}
+      runnerVersion: ${{ steps.runnerVersion.outputs.release }}
     
     steps:
       # Get our latest release
@@ -35,7 +39,8 @@ jobs:
   make-release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: ${{ jobs.check-update.steps.ourVersion.outputs.release != jobs.check-update.steps.runnerVersion.outputs.release }}
+    needs: check-update
+    if: ${{ needs.check-update.outputs.ourVersion != needs.check-update.outputs.runnerVersion }}
     steps:
       - name: Create Release
         run: echo TODO
