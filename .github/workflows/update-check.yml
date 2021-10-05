@@ -1,10 +1,8 @@
 name: Update Check
 
 on:
-  push:
-    branches: [ update-check ]
-  #schedule:
-  #  - cron: "1 * * * *" # Check every hour
+  schedule:
+   - cron: "1 * * * *" # Check every hour
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
