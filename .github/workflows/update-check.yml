@@ -1,0 +1,41 @@
+name: Update Check
+
+on:
+  push:
+    branches: [ update-check ]
+  #schedule:
+  #  - cron: "1 * * * *" # Check every hour
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  check-update:
+    name: Check for Update
+    runs-on: ubuntu-latest
+    
+    steps:
+      # Get our latest release
+      - id: ourVersion
+        name: Get Local Release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: ChrisRomp
+          repo: github-actions-runner-docker
+          excludes: prerelease, draft
+      
+      - id: runnerVersion
+        name: Get Runner Rlease
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: actions
+          repo: runner
+          excludes: prerelease, draft
+  
+  make-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    if: ${{ steps.ourVersion.outputs.release != steps.runnerVersion.outputs.release }}
+    steps:
+      - name: Create Release
+        run: echo TODO
