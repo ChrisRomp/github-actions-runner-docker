@@ -49,5 +49,21 @@ jobs:
     steps:
       - name: Show Versions
         run: |
-          echo "ourVersion: ${{ needs.check-update.outputs.ourVersion}}"
-          echo "runnerVersion: ${{ needs.check-update.outputs.runnerVersion}}"
+          echo "ourVersion: ${{ needs.check-update.outputs.ourVersion }}"
+          echo "runnerVersion: ${{ needs.check-update.outputs.runnerVersion }}"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.check-update.outputs.runnerVersion }}
+          release_name: ${{ needs.check-update.outputs.runnerVersion }}
+          draft: false
+          prerelase: false
+          body: |
+            See: https://github.com/actions/runner/releases/tag/${{ needs.check-update.outputs.runnerVersion }}
