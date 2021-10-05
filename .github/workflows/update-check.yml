@@ -1,0 +1,67 @@
+name: Update Check
+
+on:
+  schedule:
+   - cron: "1 * * * *" # Check every hour
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  check-update:
+    name: Check for Update
+    runs-on: ubuntu-latest
+
+    outputs:
+      ourVersion: ${{ steps.ourVersion.outputs.release }}
+      runnerVersion: ${{ steps.runnerVersion.outputs.release }}
+    
+    steps:
+      # Get our latest release
+      - id: ourVersion
+        name: Get Local Release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: ChrisRomp
+          repo: github-actions-runner-docker
+          excludes: prerelease, draft
+      
+      - id: runnerVersion
+        name: Get Runner Release
+        uses: pozetroninc/github-action-get-latest-release@master
+        with:
+          owner: actions
+          repo: runner
+          excludes: prerelease, draft
+      
+      - name: Show Versions
+        run: |
+          echo "ourVersion: ${{ steps.ourVersion.outputs.release }}"
+          echo "runnerVersion: ${{ steps.runnerVersion.outputs.release }}"
+  
+  make-release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    needs: check-update
+    if: ${{ needs.check-update.outputs.ourVersion != needs.check-update.outputs.runnerVersion }}
+    steps:
+      - name: Show Versions
+        run: |
+          echo "ourVersion: ${{ needs.check-update.outputs.ourVersion }}"
+          echo "runnerVersion: ${{ needs.check-update.outputs.runnerVersion }}"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ needs.check-update.outputs.runnerVersion }}
+          release_name: ${{ needs.check-update.outputs.runnerVersion }}
+          draft: false
+          prerelase: false
+          body: |
+            See: https://github.com/actions/runner/releases/tag/${{ needs.check-update.outputs.runnerVersion }}
