@@ -35,7 +35,7 @@ jobs:
   make-release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: ${{ steps.ourVersion.outputs.release != steps.runnerVersion.outputs.release }}
+    if: ${{ jobs.check-update.steps.ourVersion.outputs.release != jobs.check-update.steps.runnerVersion.outputs.release }}
     steps:
       - name: Create Release
         run: echo TODO
