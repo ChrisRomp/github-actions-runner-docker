@@ -1,6 +1,8 @@
 # github-actions-runner-docker
 
-A simple, Dockerized runner for GitHub Actions.
+A simple, Dockerized runner for GitHub Actions. This project will check for an updated release of the [official runner](https://github.com/actions/runner) hourly and build a new release as needed.
+
+This is a _Proof-of-Concept_ project only. You should fork this and customize it to your needs if you wish to use it in a production environment.
 
 [![Docker Publish](https://github.com/ChrisRomp/github-actions-runner-docker/actions/workflows/docker-publish.yml/badge.svg)](https://github.com/ChrisRomp/github-actions-runner-docker/actions/workflows/docker-publish.yml)
 
