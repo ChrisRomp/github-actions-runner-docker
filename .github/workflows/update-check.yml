@@ -29,12 +29,17 @@ jobs:
           excludes: prerelease, draft
       
       - id: runnerVersion
-        name: Get Runner Rlease
+        name: Get Runner Release
         uses: pozetroninc/github-action-get-latest-release@master
         with:
           owner: actions
           repo: runner
           excludes: prerelease, draft
+      
+      - name: Show Versions
+        run: |
+          echo: "ourVersion: ${{ steps.ourVersion.outputs.release }}"
+          echo: "runnerVersion: ${{ steps.runnerVersion.outputs.release }}"
   
   make-release:
     name: Create Release
@@ -42,5 +47,7 @@ jobs:
     needs: check-update
     if: ${{ needs.check-update.outputs.ourVersion != needs.check-update.outputs.runnerVersion }}
     steps:
-      - name: Create Release
-        run: echo TODO
+      - name: Show Versions
+        run: |
+          echo "ourVersion: ${{ needs.check-update.outputs.ourVersion}}"
+          echo "runnerVersion: ${{ needs.check-update.outputs.runnerVersion}}"
