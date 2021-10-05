@@ -45,7 +45,7 @@ jobs:
     name: Create Release
     runs-on: ubuntu-latest
     needs: check-update
-    if: ${{ needs.check-update.outputs.ourVersion == needs.check-update.outputs.runnerVersion }}
+    if: ${{ needs.check-update.outputs.ourVersion != needs.check-update.outputs.runnerVersion }}
     steps:
       - name: Show Versions
         run: |
