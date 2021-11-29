@@ -62,6 +62,6 @@ jobs:
           tag_name: ${{ needs.check-update.outputs.runnerVersion }}
           release_name: ${{ needs.check-update.outputs.runnerVersion }}
           draft: false
-          prerelase: false
+          prerelease: false
           body: |
             See: https://github.com/actions/runner/releases/tag/${{ needs.check-update.outputs.runnerVersion }}
